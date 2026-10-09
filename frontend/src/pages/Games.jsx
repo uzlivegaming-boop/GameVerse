@@ -5,16 +5,16 @@ const games = [
     name: 'Minecraft',
     type: 'Adventure • Survival',
     category: 'Adventure',
-    image: '/games/minecraft.jpg',
+    image: 'https://images.unsplash.com/photo-1627856013091-fed6e4e30025?w=600&auto=format&fit=crop',
     rating: '4.9',
     size: 'Launcher',
     downloadUrl: 'https://www.minecraft.net/en-us/download/'
-  },
+  },  
   {
     name: 'CS2',
     type: 'FPS • Multiplayer',
     category: 'Action',
-    image: '/games/CS2.jpg',
+    image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&auto=format&fit=crop',
     rating: '4.8',
     size: 'Free',
     downloadUrl: 'https://store.steampowered.com/app/730/CounterStrike_2/'
@@ -23,7 +23,7 @@ const games = [
     name: 'Valorant',
     type: 'FPS • Competitive',
     category: 'Action',
-    image: '/games/valorant.jpg',
+    image: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=600&auto=format&fit=crop',
     rating: '4.8',
     size: 'Free',
     downloadUrl: 'https://playvalorant.com/en-us/download/'
@@ -32,7 +32,7 @@ const games = [
     name: 'Forza Horizon 5',
     type: 'Racing • Open World',
     category: 'Racing',
-    image: '/games/forza-horizon-5.jpg',
+    image: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=600&auto=format&fit=crop',
     rating: '4.8',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/1551360/Forza_Horizon_5/'
@@ -41,7 +41,7 @@ const games = [
     name: 'GTA V',
     type: 'Action • Open World',
     category: 'Action',
-    image: '/games/gta-v.jpg',
+    image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?w=600&auto=format&fit=crop',
     rating: '4.7',
     size: 'Store',
     downloadUrl: 'https://store.rockstargames.com/game/buy-gta-v'
@@ -50,7 +50,7 @@ const games = [
     name: 'Roblox',
     type: 'Adventure • Online',
     category: 'Adventure',
-    image: '/games/roblox.jpg',
+    image: 'https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop',
     rating: '4.7',
     size: 'Free',
     downloadUrl: 'https://www.roblox.com/download'
@@ -59,7 +59,7 @@ const games = [
     name: 'Dota 2',
     type: 'MOBA • Multiplayer',
     category: 'Strategy',
-    image: '/games/Dota-2.jpg',
+    image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&auto=format&fit=crop',
     rating: '4.7',
     size: 'Free',
     downloadUrl: 'https://store.steampowered.com/app/570/Dota_2/'
@@ -68,7 +68,7 @@ const games = [
     name: 'Need for Speed',
     type: 'Racing • Open World',
     category: 'Racing',
-    image: '/games/NFS.jpg',
+    image: 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?w=600&auto=format&fit=crop',
     rating: '4.6',
     size: 'Store',
     downloadUrl: 'https://www.ea.com/games/need-for-speed'
@@ -77,7 +77,7 @@ const games = [
     name: 'Black Myth: Wukong',
     type: 'Action • Adventure',
     category: 'Adventure',
-    image: '/games/Wukong.jpg',
+    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop',
     rating: '4.8',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/2358720/Black_Myth_Wukong/'
@@ -86,7 +86,7 @@ const games = [
     name: 'Call of Duty',
     type: 'Shooter • Multiplayer',
     category: 'Action',
-    image: '/games/COD.jpg',
+    image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&auto=format&fit=crop',
     rating: '4.7',
     size: 'Launcher',
     downloadUrl: 'https://www.callofduty.com/'
@@ -95,7 +95,7 @@ const games = [
     name: 'PUBG Battlegrounds',
     type: 'Battle Royale • Online',
     category: 'Action',
-    image: '/games/PUBG.jpg',
+    image: 'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=600&auto=format&fit=crop',
     rating: '4.6',
     size: 'Free',
     downloadUrl: 'https://store.steampowered.com/app/578080/PUBG_BATTLEGROUNDS/'
@@ -104,7 +104,7 @@ const games = [
     name: 'Funnel Runners',
     type: 'Horror • Online',
     category: 'Adventure',
-    image: '/games/FR.jpg',
+    image: 'https://images.unsplash.com/photo-1509281373149-e957c6296406?w=600&auto=format&fit=crop',
     rating: '4.3',
     size: 'Game',
     downloadUrl: 'https://store.steampowered.com/'
@@ -113,7 +113,7 @@ const games = [
     name: 'The Sims 4',
     type: 'Simulation • Life',
     category: 'Simulation',
-    image: '/games/The-Sims-4.jpg',
+    image: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?w=600&auto=format&fit=crop',
     rating: '4.6',
     size: 'Free',
     downloadUrl: 'https://www.ea.com/games/the-sims/the-sims-4/buy'
@@ -122,7 +122,7 @@ const games = [
     name: 'Stardew Valley',
     type: 'Farming • RPG',
     category: 'Simulation',
-    image: '/games/images.jpg',
+    image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&auto=format&fit=crop',
     rating: '4.9',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/413150/Stardew_Valley/'
@@ -131,7 +131,7 @@ const games = [
     name: 'Terraria',
     type: 'Sandbox • Adventure',
     category: 'Adventure',
-    image: '/games/Terraria.jpg',
+    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop',
     rating: '4.8',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/105600/Terraria/'
@@ -140,7 +140,7 @@ const games = [
     name: 'Euro Truck Simulator 2',
     type: 'Driving • Simulation',
     category: 'Racing',
-    image: '/games/ETS.jpg',
+    image: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600&auto=format&fit=crop',
     rating: '4.8',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/227300/Euro_Truck_Simulator_2/'
@@ -149,7 +149,7 @@ const games = [
     name: 'Trackmania',
     type: 'Racing • Time Attack',
     category: 'Racing',
-    image: '/games/Trackmania.jpg',
+    image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600&auto=format&fit=crop',
     rating: '4.5',
     size: 'Free',
     downloadUrl: 'https://www.trackmania.com/'
@@ -158,7 +158,7 @@ const games = [
     name: 'Fall Guys',
     type: 'Party • Multiplayer',
     category: 'Casual',
-    image: '/games/Fall-Guys.jpg',
+    image: 'https://images.unsplash.com/photo-1551103782-8ab07afd45c1?w=600&auto=format&fit=crop',
     rating: '4.5',
     size: 'Free',
     downloadUrl: 'https://www.fallguys.com/'
@@ -167,7 +167,7 @@ const games = [
     name: 'Brawlhalla',
     type: 'Fighting • Online',
     category: 'Action',
-    image: '/games/Brawlhalla.jpg',
+    image: 'https://images.unsplash.com/photo-1560253023-3ec5d502959f?w=600&auto=format&fit=crop',
     rating: '4.5',
     size: 'Free',
     downloadUrl: 'https://www.brawlhalla.com/'
@@ -176,7 +176,7 @@ const games = [
     name: 'Palworld',
     type: 'Survival • Open World',
     category: 'Adventure',
-    image: '/games/Palworld.jpg',
+    image: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop',
     rating: '4.6',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/1623730/Palworld/'
@@ -185,7 +185,7 @@ const games = [
     name: 'Red Dead Redemption 2',
     type: 'Action • Open World',
     category: 'Action',
-    image: '/games/rdr2.jpg',
+    image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=600&auto=format&fit=crop',
     rating: '4.9',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/1174180/Red_Dead_Redemption_2/'
@@ -194,7 +194,7 @@ const games = [
     name: 'The Witcher 3',
     type: 'RPG • Open World',
     category: 'Adventure',
-    image: '/games/witcher-3.jpg',
+    image: 'https://images.unsplash.com/photo-1514539079130-25950c84af65?w=600&auto=format&fit=crop',
     rating: '4.9',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/292030/The_Witcher_3_Wild_Hunt/'
@@ -203,7 +203,7 @@ const games = [
     name: 'Cyberpunk 2077',
     type: 'RPG • Open World',
     category: 'Action',
-    image: '/games/cyberpunk-2077.jpg',
+    image: 'https://images.unsplash.com/photo-1542751110-97427bbecf20?w=600&auto=format&fit=crop',
     rating: '4.7',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/1091500/Cyberpunk_2077/'
@@ -212,7 +212,7 @@ const games = [
     name: 'Elden Ring',
     type: 'Action • RPG',
     category: 'Adventure',
-    image: '/games/elden-ring.jpg',
+    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop',
     rating: '4.8',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/1245620/ELDEN_RING/'
@@ -221,7 +221,7 @@ const games = [
     name: 'God of War',
     type: 'Action • Adventure',
     category: 'Action',
-    image: '/games/god-of-war.jpg',
+    image: 'https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?w=600&auto=format&fit=crop',
     rating: '4.8',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/1593500/God_of_War/'
@@ -230,7 +230,7 @@ const games = [
     name: 'Hogwarts Legacy',
     type: 'Adventure • RPG',
     category: 'Adventure',
-    image: '/games/hogwarts-legacy.jpg',
+    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop',
     rating: '4.7',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/990080/Hogwarts_Legacy/'
@@ -239,7 +239,7 @@ const games = [
     name: 'Horizon Zero Dawn',
     type: 'Action • RPG',
     category: 'Adventure',
-    image: '/games/horizon-zero-dawn.jpg',
+    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&auto=format&fit=crop',
     rating: '4.8',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/1151640/Horizon_Zero_Dawn_Complete_Edition/'
@@ -248,7 +248,7 @@ const games = [
     name: 'Days Gone',
     type: 'Action • Survival',
     category: 'Action',
-    image: '/games/days-gone.jpg',
+    image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&auto=format&fit=crop',
     rating: '4.7',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/1259420/Days_Gone/'
@@ -257,7 +257,7 @@ const games = [
     name: 'Dying Light',
     type: 'Action • Survival',
     category: 'Action',
-    image: '/games/dying-light.jpg',
+    image: 'https://images.unsplash.com/photo-1509281373149-e957c6296406?w=600&auto=format&fit=crop',
     rating: '4.8',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/239140/Dying_Light/'
@@ -266,7 +266,7 @@ const games = [
     name: 'Left 4 Dead 2',
     type: 'FPS • Multiplayer',
     category: 'Action',
-    image: '/games/left-4-dead-2.jpg',
+    image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&auto=format&fit=crop',
     rating: '4.8',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/550/Left_4_Dead_2/'
@@ -275,7 +275,7 @@ const games = [
     name: 'Apex Legends',
     type: 'FPS • Battle Royale',
     category: 'Action',
-    image: '/games/apex-legends.jpg',
+    image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&auto=format&fit=crop',
     rating: '4.6',
     size: 'Free',
     downloadUrl: 'https://store.steampowered.com/app/1172470/Apex_Legends/'
@@ -284,7 +284,7 @@ const games = [
     name: 'Overwatch 2',
     type: 'FPS • Multiplayer',
     category: 'Action',
-    image: '/games/overwatch-2.jpg',
+    image: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=600&auto=format&fit=crop',
     rating: '4.5',
     size: 'Free',
     downloadUrl: 'https://overwatch.blizzard.com/'
@@ -293,7 +293,7 @@ const games = [
     name: 'Rainbow Six Siege',
     type: 'FPS • Tactical',
     category: 'Action',
-    image: '/games/rainbow-six-siege.jpg',
+    image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&auto=format&fit=crop',
     rating: '4.7',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/359550/Tom_Clancys_Rainbow_Six_Siege/'
@@ -302,7 +302,7 @@ const games = [
     name: 'Rocket League',
     type: 'Sports • Racing',
     category: 'Racing',
-    image: '/games/rocket-league.jpg',
+    image: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=600&auto=format&fit=crop',
     rating: '4.7',
     size: 'Free',
     downloadUrl: 'https://store.epicgames.com/en-US/p/rocket-league'
@@ -311,7 +311,7 @@ const games = [
     name: 'F1 24',
     type: 'Racing • Simulation',
     category: 'Racing',
-    image: '/games/f1-24.jpg',
+    image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600&auto=format&fit=crop',
     rating: '4.5',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/2488620/F1_24/'
@@ -320,7 +320,7 @@ const games = [
     name: 'Assetto Corsa',
     type: 'Racing • Simulation',
     category: 'Racing',
-    image: '/games/assetto-corsa.jpg',
+    image: 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?w=600&auto=format&fit=crop',
     rating: '4.7',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/244210/Assetto_Corsa/'
@@ -329,7 +329,7 @@ const games = [
     name: 'American Truck Simulator',
     type: 'Driving • Simulation',
     category: 'Racing',
-    image: '/games/american-truck-simulator.jpg',
+    image: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600&auto=format&fit=crop',
     rating: '4.8',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/270880/American_Truck_Simulator/'
@@ -338,7 +338,7 @@ const games = [
     name: 'BeamNG.drive',
     type: 'Driving • Simulation',
     category: 'Racing',
-    image: '/games/beamng-drive.jpg',
+    image: 'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600&auto=format&fit=crop',
     rating: '4.8',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/284160/BeamNGdrive/'
@@ -347,7 +347,7 @@ const games = [
     name: 'DiRT Rally 2.0',
     type: 'Racing • Simulation',
     category: 'Racing',
-    image: '/games/dirt-rally-2.jpg',
+    image: 'https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?w=600&auto=format&fit=crop',
     rating: '4.6',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/690790/DiRT_Rally_20/'
@@ -356,7 +356,7 @@ const games = [
     name: 'Cities: Skylines',
     type: 'Building • Strategy',
     category: 'Strategy',
-    image: '/games/cities-skylines.jpg',
+    image: 'https://images.unsplash.com/photo-1477959858617-67f30ac4ce78?w=600&auto=format&fit=crop',
     rating: '4.8',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/255710/Cities_Skylines/'
@@ -365,7 +365,7 @@ const games = [
     name: 'Civilization VI',
     type: 'Strategy • Turn-Based',
     category: 'Strategy',
-    image: '/games/civilization-6.avif',
+    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop',
     rating: '4.8',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/289070/Sid_Meiers_Civilization_VI/'
@@ -374,7 +374,7 @@ const games = [
     name: 'Age of Empires IV',
     type: 'Strategy • RTS',
     category: 'Strategy',
-    image: '/games/age-of-empires-4.webp',
+    image: 'https://images.unsplash.com/photo-1514539079130-25950c84af65?w=600&auto=format&fit=crop',
     rating: '4.7',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/1466860/Age_of_Empires_IV/'
@@ -383,7 +383,7 @@ const games = [
     name: 'ARK: Survival Evolved',
     type: 'Survival • Open World',
     category: 'Adventure',
-    image: '/games/ark-survival-evolved.jpg',
+    image: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=600&auto=format&fit=crop',
     rating: '4.6',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/346110/ARK_Survival_Evolved/'
@@ -392,7 +392,7 @@ const games = [
     name: 'Rust',
     type: 'Survival • Multiplayer',
     category: 'Adventure',
-    image: '/games/rust.jpg',
+    image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&auto=format&fit=crop',
     rating: '4.6',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/252490/Rust/'
@@ -401,7 +401,7 @@ const games = [
     name: 'Raft',
     type: 'Survival • Adventure',
     category: 'Adventure',
-    image: '/games/raft.jpg',
+    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop',
     rating: '4.7',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/648800/Raft/'
@@ -410,7 +410,7 @@ const games = [
     name: 'Subnautica',
     type: 'Survival • Exploration',
     category: 'Adventure',
-    image: '/games/subnautica.jpg',
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&auto=format&fit=crop',
     rating: '4.9',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/264710/Subnautica/'
@@ -419,7 +419,7 @@ const games = [
     name: 'Hades',
     type: 'Action • RPG',
     category: 'Action',
-    image: '/games/hades.jpg',
+    image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop',
     rating: '4.9',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/1145360/Hades/'
@@ -428,7 +428,7 @@ const games = [
     name: 'Hollow Knight',
     type: 'Adventure • Metroidvania',
     category: 'Adventure',
-    image: '/games/hollow-knight.jpg',
+    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&auto=format&fit=crop',
     rating: '4.9',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/367520/Hollow_Knight/'
@@ -437,7 +437,7 @@ const games = [
     name: 'Among Us',
     type: 'Party • Multiplayer',
     category: 'Casual',
-    image: '/games/among-us.jpg',
+    image: 'https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop',
     rating: '4.6',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/945360/Among_Us/'
@@ -446,7 +446,7 @@ const games = [
     name: 'Human Fall Flat',
     type: 'Puzzle • Multiplayer',
     category: 'Casual',
-    image: '/games/human-fall-flat.jpeg',
+    image: 'https://images.unsplash.com/photo-1551103782-8ab07afd45c1?w=600&auto=format&fit=crop',
     rating: '4.7',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/477160/Human_Fall_Flat/'
@@ -455,11 +455,11 @@ const games = [
     name: 'It Takes Two',
     type: 'Adventure • Co-op',
     category: 'Adventure',
-    image: '/games/it-takes-two.jpg',
+    image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&auto=format&fit=crop',
     rating: '4.9',
     size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/1426210/It_Takes_Two/'
-  },
+  }
 ];
 
 const categories = ['Barchasi', 'Action', 'Adventure', 'Racing', 'Simulation', 'Strategy', 'Casual'];
