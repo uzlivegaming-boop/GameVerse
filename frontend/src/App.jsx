@@ -1,3 +1,4 @@
+
 import {
   BrowserRouter,
   Routes,
@@ -5,35 +6,21 @@ import {
 } from 'react-router';
 
 import Layout from './components/Layout';
-
 import ProtectedRoute from './components/ProtectedRoute';
-
 import Home from './pages/Home';
-
 import Dashboard from './pages/Dashboard';
-
 import Games from './pages/Games';
-
 import Favorites from './pages/Favorites';
-
 import Notifications from './pages/Notifications';
-
 import Profile from './pages/Profile';
-
+import ConnectionStatus from './components/ConnectionStatus';
 
 function App() {
   return (
     <BrowserRouter>
-
       <Routes>
-
         <Route element={<Layout />}>
-
-          <Route
-            path="/"
-            element={<Home />}
-/>
-
+          <Route path="/" element={<Home />} />
 
           <Route
             path="/dashboard"
@@ -44,7 +31,6 @@ function App() {
             }
           />
 
-
           <Route
             path="/games"
             element={
@@ -53,7 +39,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-
 
           <Route
             path="/favorites"
@@ -64,7 +49,6 @@ function App() {
             }
           />
 
-
           <Route
             path="/notifications"
             element={
@@ -74,7 +58,6 @@ function App() {
             }
           />
 
-
           <Route
             path="/profile"
             element={
@@ -83,11 +66,10 @@ function App() {
               </ProtectedRoute>
             }
           />
-
         </Route>
-
       </Routes>
 
+      <ConnectionStatus />
     </BrowserRouter>
   );
 }

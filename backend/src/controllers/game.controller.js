@@ -1,17 +1,11 @@
+
 const prisma = require('../prisma');
 
-
-// GET /games
 const getAll = async (req, res, next) => {
   try {
     const items = await prisma.games.findMany({
-      where: {
-        userId: req.userId
-      },
-
-      orderBy: {
-        createdAt: 'desc'
-      }
+      where: { userId: req.userId },
+      orderBy: { createdAt: 'desc' }
     });
 
     res.json({
@@ -23,16 +17,14 @@ const getAll = async (req, res, next) => {
   }
 };
 
-
-// GET /games/:id
 const getById = async (req, res, next) => {
   try {
-    const id = parseInt(req.params.id, 10);
+    const id = Number.parseInt(req.params.id, 10);
 
-    if (Number.isNaN(id)) {
+    if (!Number.isInteger(id) || id < 1) {
       return res.status(400).json({
         success: false,
-        error: 'Invalid id'
+        error: 'ID noto‘g‘ri'
       });
     }
 
@@ -46,7 +38,7 @@ const getById = async (req, res, next) => {
     if (!item) {
       return res.status(404).json({
         success: false,
-        error: "O'yin topilmadi"
+        error: 'O‘yin topilmadi'
       });
     }
 
@@ -59,14 +51,16 @@ const getById = async (req, res, next) => {
   }
 };
 
-
-// POST /games
 const create = async (req, res, next) => {
   try {
     const {
       name,
       description,
       image,
+      category,
+      platform,
+      downloadUrl,
+      rating,
       downloadCount
     } = req.body;
 
@@ -75,7 +69,11 @@ const create = async (req, res, next) => {
         name,
         description,
         image,
-        downloadCount,
+        category: category || 'Other',
+        platform: platform || null,
+        downloadUrl: downloadUrl || null,
+        rating: rating ?? null,
+        downloadCount: downloadCount ?? 0,
         userId: req.userId
       }
     });
@@ -89,16 +87,14 @@ const create = async (req, res, next) => {
   }
 };
 
-
-// PUT /games/:id
 const update = async (req, res, next) => {
   try {
-    const id = parseInt(req.params.id, 10);
+    const id = Number.parseInt(req.params.id, 10);
 
-    if (Number.isNaN(id)) {
+    if (!Number.isInteger(id) || id < 1) {
       return res.status(400).json({
         success: false,
-        error: 'Invalid id'
+        error: 'ID noto‘g‘ri'
       });
     }
 
@@ -112,15 +108,28 @@ const update = async (req, res, next) => {
     if (!existing) {
       return res.status(404).json({
         success: false,
-        error: "O'yin topilmadi"
+        error: 'O‘yin topilmadi'
       });
     }
 
+    const allowed = [
+      'name',
+      'description',
+      'image',
+      'category',
+      'platform',
+      'downloadUrl',
+      'rating',
+      'downloadCount'
+    ];
+
+    const data = Object.fromEntries(
+      Object.entries(req.body).filter(([key]) => allowed.includes(key))
+    );
+
     const item = await prisma.games.update({
-      where: {
-        id
-      },
-      data: req.body
+      where: { id },
+      data
     });
 
     res.json({
@@ -132,16 +141,14 @@ const update = async (req, res, next) => {
   }
 };
 
-
-// DELETE /games/:id
 const remove = async (req, res, next) => {
   try {
-    const id = parseInt(req.params.id, 10);
+    const id = Number.parseInt(req.params.id, 10);
 
-    if (Number.isNaN(id)) {
+    if (!Number.isInteger(id) || id < 1) {
       return res.status(400).json({
         success: false,
-        error: 'Invalid id'
+        error: 'ID noto‘g‘ri'
       });
     }
 
@@ -155,14 +162,12 @@ const remove = async (req, res, next) => {
     if (!existing) {
       return res.status(404).json({
         success: false,
-        error: "O'yin topilmadi"
+        error: 'O‘yin topilmadi'
       });
     }
 
     await prisma.games.delete({
-      where: {
-        id
-      }
+      where: { id }
     });
 
     res.status(204).send();
@@ -170,7 +175,6 @@ const remove = async (req, res, next) => {
     next(err);
   }
 };
-
 
 module.exports = {
   getAll,

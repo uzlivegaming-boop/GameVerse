@@ -1,9 +1,12 @@
+
 import client from './client';
 
-export const getGame = async () => {
+export const getGames = async () => {
   const response = await client.get('/games');
   return response.data.data;
 };
+
+export const getGame = getGames;
 
 export const getGameById = async (id) => {
   const response = await client.get(`/games/${id}`);

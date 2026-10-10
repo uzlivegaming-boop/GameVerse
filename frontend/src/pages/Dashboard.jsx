@@ -1,53 +1,68 @@
 import { useUser } from '@clerk/react';
 
 const games = [
-  {
+ {
     name: 'Minecraft',
-    type: 'Sandbox • Survival',
-    image: '/games/minecraft.jpg',
+    type: 'Adventure • Survival',
+    category: 'Adventure',
+    image: 'https://minecraft.wiki/images/MC_key_art_2024.jpg',
+    rating: '4.9',
+    size: 'Launcher',
     downloadUrl: 'https://www.minecraft.net/en-us/download/'
   },
   {
     name: 'CS2',
-    type: 'FPS • Competitive',
-    image: '/games/cs2.jpg',
+    type: 'FPS • Multiplayer',
+    category: 'Action',
+    image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg',
+    rating: '4.8',
+    size: 'Free',
     downloadUrl: 'https://store.steampowered.com/app/730/CounterStrike_2/'
+  },
+  {
+    name: 'Valorant',
+    type: 'FPS • Competitive',
+    category: 'Action',
+    image: 'https://media.valorant-api.com/agents/9f0d8ba9-4140-b941-57d3-a7ad57c6b417/displayicon.png',
+    rating: '4.8',
+    size: 'Free',
+    downloadUrl: 'https://playvalorant.com/en-us/download/'
   },
   {
     name: 'Forza Horizon 5',
     type: 'Racing • Open World',
-    image: '/games/forza-horizon-5.jpg',
+    category: 'Racing',
+    image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/header.jpg',
+    rating: '4.8',
+    size: 'Store',
     downloadUrl: 'https://store.steampowered.com/app/1551360/Forza_Horizon_5/'
   },
   {
     name: 'GTA V',
     type: 'Action • Open World',
-    image: '/games/gta-v.jpg',
+    category: 'Action',
+    image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/271590/header.jpg',
+    rating: '4.7',
+    size: 'Store',
     downloadUrl: 'https://store.rockstargames.com/game/buy-gta-v'
   },
   {
-    name: 'Wukong',
-    type: 'Action • Adventure',
-    image: '/games/Wukong.jpg',
-    downloadUrl: 'https://store.steampowered.com/app/2358720/Black_Myth_Wukong/'
+    name: 'Roblox',
+    type: 'Adventure • Online',
+    category: 'Adventure',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZVh4qmAnrdhBSYpLHSwkXhAK8tqSxmJf0pkwpd7f3jg&s=10',
+    rating: '4.7',
+    size: 'Free',
+    downloadUrl: 'https://www.roblox.com/download'
   },
   {
-    name: 'Call of Duty',
-    type: 'Shooter • Multiplayer',
-    image: '/games/COD.jpg',
-    downloadUrl: 'https://www.callofduty.com/'
-  },
-  {
-    name: 'PUBG Battlegrounds',
-    type: 'Battle Royale • Multiplayer',
-    image: '/games/PUBG.jpg',
-    downloadUrl: 'https://store.steampowered.com/app/578080/PUBG_BATTLEGROUNDS/'
-  },
-  {
-    name: 'Funnel Runners',
-    type: 'Survival Horror • Online',
-    image: '/games/FR.jpg',
-    downloadUrl: 'https://store.steampowered.com/'
+    name: 'Dota 2',
+    type: 'MOBA • Multiplayer',
+    category: 'Strategy',
+    image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/570/header.jpg',
+    rating: '4.7',
+    size: 'Free',
+    downloadUrl: 'https://store.steampowered.com/app/570/Dota_2/'
   },
 ];
 

@@ -50,7 +50,7 @@ const games = [
     name: 'Roblox',
     type: 'Adventure • Online',
     category: 'Adventure',
-    image: 'https://corp.roblox.com/wp-content/uploads/2024/01/Roblox_Logo_Black.png',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZVh4qmAnrdhBSYpLHSwkXhAK8tqSxmJf0pkwpd7f3jg&s=10',
     rating: '4.7',
     size: 'Free',
     downloadUrl: 'https://www.roblox.com/download'
@@ -104,7 +104,7 @@ const games = [
     name: 'Funnel Runners',
     type: 'Horror • Online',
     category: 'Adventure',
-    image: 'https://images.unsplash.com/photo-1509281373149-e957c6296406?w=600&auto=format&fit=crop',
+    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE6aE-2DsZ7oUzh9A8FyWb3uWKjMEc4bfcqagUeOpyfVkxa84wIkpD65M&s=10',
     rating: '4.3',
     size: 'Game',
     downloadUrl: 'https://store.steampowered.com/'

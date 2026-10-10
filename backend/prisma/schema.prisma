@@ -8,6 +8,11 @@ generator client {
   provider = "prisma-client-js"
 }
 
+
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -18,7 +23,13 @@ model Games {
   name          String
   description   String
   image         String
-  downloadCount Int
-  userId        Int
-  createAt      DateTime
+  category      String   @default("Other")
+  platform      String?
+  downloadUrl   String?
+  rating        Float?
+  downloadCount Int      @default(0)
+  userId        String
+  createdAt     DateTime @default(now())
+
+  @@index([userId, createdAt])
 }
