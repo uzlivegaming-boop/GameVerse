@@ -1,80 +1,86 @@
-import {
-  SignInButton,
-  SignUpButton,
-  useAuth
-} from '@clerk/react';
 
+import { SignInButton, SignUpButton, useAuth } from '@clerk/react';
 import { Navigate } from 'react-router';
 
 function Home() {
-  const {
-    isLoaded,
-    isSignedIn
-  } = useAuth();
+  const { isLoaded, isSignedIn } = useAuth();
 
-  // Login qilingan bo'lsa,
-  // Home sahifasida qolmaydi
   if (isLoaded && isSignedIn) {
-    return (
-      <Navigate
-        to="/dashboard"
-        replace
-      />
-    );
+    return <Navigate to="/dashboard" replace />;
   }
 
   return (
     <main className="auth-page">
+      {/* Harakatlanuvchi video fon */}
+      <video
+        className="auth-video"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-hidden="true"
+      >
+        <source src="/videos/game-bg.mp4" type="video/mp4" />
+      </video>
 
+      {/* Video ustidagi qoramtir qatlam */}
       <div className="auth-overlay" />
 
-      <section className="auth-card">
+      {/* Orqa fondagi animatsiyali yorug'lik */}
+      <div className="auth-glow auth-glow-one" />
+      <div className="auth-glow auth-glow-two" />
 
+      {/* Kirish kartasi */}
+      <section className="auth-card">
         <div className="logo-mark">
           🎮
         </div>
 
-        <div className="brand">
+        <div className="brand auth-brand">
           <span>Game</span>Verse
         </div>
 
-        <h1>
-          O'yin dunyosiga qo'shiling
-        </h1>
+        <div className="auth-badge">
+          <span className="auth-status-dot" />
+          YOUR NEXT LEVEL STARTS HERE
+        </div>
 
-        <p>
-          Profil yarating va sevimli
-          o'yinlaringizni bir joyda
-          saqlang.
+        <h1>O'yin dunyosiga qo'shiling</h1>
+
+        <p className="auth-description">
+          Sevimli o'yinlaringizni kashf eting,
+          to'plamingizni yarating va GameVerse
+          hamjamiyatiga qo'shiling.
         </p>
 
-        {/* KIRISH */}
         <SignInButton mode="modal">
-          <button
-            className="primary-btn auth-btn"
-            type="button"
-          >
-            Kirish
+          <button className="primary-btn auth-btn" type="button">
+            <span>Kirish</span>
+            <span className="auth-button-arrow">→</span>
           </button>
         </SignInButton>
 
-        {/* RO'YXATDAN O'TISH */}
         <SignUpButton mode="modal">
-          <button
-            className="secondary-btn auth-btn"
-            type="button"
-          >
+          <button className="secondary-btn auth-btn" type="button">
             Ro'yxatdan o'tish
           </button>
         </SignUpButton>
 
-        <div className="auth-note">
-          Hisobingiz bo'lsa — kiring.
-          Hisobingiz bo'lmasa — ro'yxatdan o'ting.
+        <div className="auth-divider">
+          <span />
+          <span>GAMEVERSE</span>
+          <span />
         </div>
 
+        <div className="auth-note">
+          Hisobingiz bormi? Kirish tugmasini bosing.
+        </div>
       </section>
 
+      <div className="auth-bottom-label">
+        <span>●</span> ENTER THE GAMEVERSE
+      </div>
     </main>
   );
 }
