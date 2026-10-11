@@ -1,9 +1,7 @@
-
-import {
-  BrowserRouter,
-  Routes,
-  Route
-} from 'react-router';
+import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router';
+import { useAuth } from '@clerk/react';
+import { setTokenProvider } from './api/client';
 
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -16,6 +14,16 @@ import Profile from './pages/Profile';
 import ConnectionStatus from './components/ConnectionStatus';
 
 function App() {
+  const { getToken } = useAuth();
+
+  useEffect(() => {
+    setTokenProvider(getToken);
+
+    return () => {
+      setTokenProvider(null);
+    };
+  }, [getToken]);
+
   return (
     <BrowserRouter>
       <Routes>

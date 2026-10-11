@@ -1,28 +1,35 @@
-
 import client from './client';
 
-export const getGames = async () => {
+export async function getGames() {
   const response = await client.get('/games');
-  return response.data.data;
-};
 
-export const getGame = getGames;
+  if (Array.isArray(response.data)) {
+    return response.data;
+  }
 
-export const getGameById = async (id) => {
+  return response.data?.data || [];
+}
+
+export async function getGameById(id) {
   const response = await client.get(`/games/${id}`);
-  return response.data.data;
-};
 
-export const createGame = async (data) => {
-  const response = await client.post('/games', data);
-  return response.data.data;
-};
+  return response.data?.data || response.data;
+}
 
-export const updateGame = async (id, data) => {
-  const response = await client.put(`/games/${id}`, data);
-  return response.data.data;
-};
+export async function createGame(gameData) {
+  const response = await client.post('/games', gameData);
 
-export const deleteGame = async (id) => {
-  await client.delete(`/games/${id}`);
-};
+  return response.data?.data || response.data;
+}
+
+export async function updateGame(id, gameData) {
+  const response = await client.put(`/games/${id}`, gameData);
+
+  return response.data?.data || response.data;
+}
+
+export async function deleteGame(id) {
+  const response = await client.delete(`/games/${id}`);
+
+  return response.data;
+}

@@ -1,49 +1,60 @@
-
 require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const { clerkMiddleware, getAuth } = require('@clerk/express');
+
+const {
+  clerkMiddleware,
+  getAuth
+} = require('@clerk/express');
+
 const prisma = require('./prisma');
 const gameRoutes = require('./routes/game.routes');
 
 const app = express();
 
-app.use(morgan('dev'));
-
 const allowedOrigins = [
   'http://localhost:5173',
-  process.env.FRONTEND_URL
-].filter(Boolean);
+  'http://localhost:5174',
+  'http://localhost:5175',
+  ...(process.env.FRONTEND_URL || '')
+    .split(',')
+    .map((url) => url.trim())
+    .filter(Boolean)
+];
 
-app.use(cors({
-  origin: allowedOrigins,
-  credentials: true
-}));
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(clerkMiddleware());
-
-app.get('/whoami', (req, res) => {
-  const { userId, sessionId, sessionClaims } = getAuth(req);
-
-  res.json({
-    success: true,
-    data: {
-      userId,
-      sessionId,
-      hasClaims: !!sessionClaims
+const corsOptions = {
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
     }
-  });
-});
 
+    if (
+      /^https:\/\/[a-z0-9-]+(?:-[a-z0-9-]+)*\.vercel\.app$/i
+        .test(origin)
+    ) {
+      return callback(null, true);
+    }
+
+    return callback(
+      new Error(`CORS: ruxsat berilmagan manba: ${origin}`)
+    );
+  },
+  credentials: true
+};
+
+app.use(cors(corsOptions));
+app.use(express.json({ limit: '1mb' }));
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
+
+// Backend va database holatini tekshirish uchun ochiq endpoint.
 app.get('/health', async (req, res) => {
   try {
     await prisma.$queryRaw`SELECT 1`;
 
-    res.json({
+    return res.status(200).json({
       success: true,
       data: {
         status: 'ok',
@@ -53,9 +64,12 @@ app.get('/health', async (req, res) => {
       }
     });
   } catch (err) {
-    console.error('Health/database check failed:', err.message);
+    console.error(
+      'Health/database check failed:',
+      err.message
+    );
 
-    res.status(503).json({
+    return res.status(503).json({
       success: false,
       data: {
         status: 'degraded',
@@ -63,13 +77,37 @@ app.get('/health', async (req, res) => {
         database: 'disconnected',
         timestamp: new Date().toISOString()
       },
-      error: 'Backend ishlayapti, lekin database bilan aloqa yo‘q.'
+      error:
+        'Backend ishlayapti, lekin database bilan aloqa yo‘q. ' +
+        'DATABASE_URL va migratsiyalarni tekshiring.'
     });
   }
 });
 
+// Clerk autentifikatsiyasi.
+app.use(clerkMiddleware());
+
+app.get('/whoami', (req, res) => {
+  const {
+    userId,
+    sessionId,
+    sessionClaims
+  } = getAuth(req);
+
+  return res.json({
+    success: true,
+    data: {
+      userId,
+      sessionId,
+      hasClaims: Boolean(sessionClaims)
+    }
+  });
+});
+
+// O‘yinlar uchun API.
 app.use('/games', gameRoutes);
 
+// Mavjud bo‘lmagan endpoint.
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -77,8 +115,13 @@ app.use((req, res) => {
   });
 });
 
+// Umumiy xatolarni qaytarish.
 app.use((err, req, res, next) => {
   console.error(err);
+
+  if (res.headersSent) {
+    return next(err);
+  }
 
   if (err.name === 'ZodError') {
     return res.status(400).json({
@@ -87,9 +130,16 @@ app.use((err, req, res, next) => {
     });
   }
 
-  res.status(err.status || 500).json({
+  if (err.message?.startsWith('CORS:')) {
+    return res.status(403).json({
+      success: false,
+      error: err.message
+    });
+  }
+
+  return res.status(err.status || 500).json({
     success: false,
-    error: err.message || 'Serverda xatolik'
+    error: err.message || 'Serverda kutilmagan xatolik'
   });
 });
 

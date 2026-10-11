@@ -1,20 +1,21 @@
-import { Outlet } from 'react-router';
 
+import { Outlet } from 'react-router';
 import Navbar from './Navbar';
 
-
-function Layout() {
+export default function Layout() {
   return (
-    <div className="min-h-screen flex flex-col">
-
+    <div className="app-shell">
       <Navbar />
 
-      <main className="flex-1">
+      <main>
         <Outlet />
       </main>
 
+      <footer className="app-footer">
+        <p>
+          © {new Date().getFullYear()} GameVerse. All rights reserved.
+        </p>
+      </footer>
     </div>
   );
 }
-
-export default Layout;

@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 
 const API_URL = (
@@ -19,7 +18,12 @@ function ConnectionStatus() {
 
         if (!active) return;
 
-        setStatus(response.ok ? 'connected' : 'error');
+        setStatus(
+          result?.data?.backend === 'connected'
+            ? 'connected'
+            : 'disconnected'
+        );
+
         setDatabase(
           result?.data?.database === 'connected'
             ? 'connected'
@@ -29,7 +33,7 @@ function ConnectionStatus() {
         if (!active) return;
 
         setStatus('disconnected');
-        setDatabase('disconnected');
+        setDatabase('unknown');
       }
     };
 
@@ -43,19 +47,21 @@ function ConnectionStatus() {
     };
   }, []);
 
-  const label = status === 'checking'
-    ? 'Tekshirilmoqda...'
-    : status === 'disconnected'
-      ? 'Backend uzilgan'
-      : database === 'connected'
-        ? 'Backend va database ulangan'
-        : 'Backend bor, database xato';
+  const label =
+    status === 'checking'
+      ? 'Ulanish tekshirilmoqda...'
+      : status === 'disconnected'
+        ? 'Backend topilmadi — API URL ni tekshiring'
+        : database === 'connected'
+          ? 'Backend va database ulangan'
+          : 'Backend ulangan, database bilan aloqa yo‘q';
 
-  const color = status === 'checking'
-    ? '#eab308'
-    : status === 'disconnected' || database !== 'connected'
-      ? '#ef4444'
-      : '#22c55e';
+  const color =
+    status === 'checking'
+      ? '#eab308'
+      : status === 'disconnected' || database !== 'connected'
+        ? '#ef4444'
+        : '#22c55e';
 
   return (
     <div

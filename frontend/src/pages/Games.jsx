@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { createGame, getGames } from '../api/games';
 
 const games = [
   {
@@ -462,29 +463,152 @@ const games = [
   }
 ];
 
-const categories = ['Barchasi', 'Action', 'Adventure', 'Racing', 'Simulation', 'Strategy', 'Casual'];
+const categories = [
+  'Barchasi',
+  'Action',
+  'Adventure',
+  'Racing',
+  'Simulation',
+  'Strategy',
+  'Casual',
+  'Other'
+];
 
 function Games() {
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('Barchasi');
   const [sort, setSort] = useState('popular');
   const [downloading, setDownloading] = useState('');
+  const [savedGames, setSavedGames] = useState([]);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [formError, setFormError] = useState('');
+
+  const [form, setForm] = useState({
+    name: '',
+    description: '',
+    image: '',
+    category: 'Action',
+    platform: 'PC',
+    downloadUrl: '',
+    rating: '4.5'
+  });
+
+  const loadSavedGames = async () => {
+    try {
+      const result = await getGames();
+      setSavedGames(Array.isArray(result) ? result : []);
+    } catch (error) {
+      console.error(
+        'Bazadagi o‘yinlarni yuklab bo‘lmadi:',
+        error.message
+      );
+    }
+  };
+
+  useEffect(() => {
+    loadSavedGames();
+  }, []);
+
+  const allGames = useMemo(() => {
+    const mapped = savedGames.map((game) => ({
+      ...game,
+      type: game.description || game.platform || 'Yangi o‘yin',
+      size: game.platform || 'PC',
+      rating: String(game.rating ?? 0),
+      downloadUrl: game.downloadUrl || '#',
+      fromDatabase: true
+    }));
+
+    const savedNames = new Set(
+      mapped.map((game) => game.name.toLowerCase())
+    );
+
+    return [
+      ...mapped,
+      ...games.filter(
+        (game) => !savedNames.has(game.name.toLowerCase())
+      )
+    ];
+  }, [savedGames]);
+
+  const handleAddGame = async (event) => {
+    event.preventDefault();
+
+    setSaving(true);
+    setFormError('');
+
+    try {
+      await createGame({
+        name: form.name.trim(),
+        description: form.description.trim(),
+        image: form.image.trim(),
+        category: form.category,
+        platform: form.platform.trim() || null,
+        downloadUrl: form.downloadUrl.trim() || '',
+        rating: Number(form.rating)
+      });
+
+      await loadSavedGames();
+
+      setForm({
+        name: '',
+        description: '',
+        image: '',
+        category: 'Action',
+        platform: 'PC',
+        downloadUrl: '',
+        rating: '4.5'
+      });
+
+      setShowAddForm(false);
+    } catch (error) {
+      setFormError(
+        error.response?.data?.message ||
+        error.message ||
+        'O‘yin saqlanmadi. Backend va database ulanishini tekshiring.'
+      );
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const filteredGames = useMemo(() => {
-    const result = games.filter((game) => {
-      const matchesQuery = `${game.name} ${game.type}`.toLowerCase().includes(query.toLowerCase());
-      const matchesCategory = category === 'Barchasi' || game.category === category;
+    const result = allGames.filter((game) => {
+      const searchText = `${game.name} ${game.type}`.toLowerCase();
+      const matchesQuery = searchText.includes(query.toLowerCase());
+
+      const matchesCategory =
+        category === 'Barchasi' || game.category === category;
+
       return matchesQuery && matchesCategory;
     });
 
-    if (sort === 'name') return [...result].sort((a, b) => a.name.localeCompare(b.name));
-    return [...result].sort((a, b) => Number(b.rating) - Number(a.rating));
-  }, [query, category, sort]);
+    if (sort === 'name') {
+      return [...result].sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+    }
+
+    return [...result].sort(
+      (a, b) => Number(b.rating) - Number(a.rating)
+    );
+  }, [allGames, query, category, sort]);
 
   const handleDownload = (game) => {
+    if (!game.downloadUrl || game.downloadUrl === '#') {
+      return;
+    }
+
     setDownloading(game.name);
+
     setTimeout(() => {
-      window.open(game.downloadUrl, '_blank', 'noopener,noreferrer');
+      window.open(
+        game.downloadUrl,
+        '_blank',
+        'noopener,noreferrer'
+      );
+
       setDownloading('');
     }, 450);
   };
@@ -495,8 +619,22 @@ function Games() {
         <div>
           <p className="eyebrow">GAME LIBRARY</p>
           <h1>O'yinlar</h1>
-          <p className="games-subtitle">Sevimli o'yinlaringizni toping va rasmiy manbadan yuklashni boshlang.</p>
+          <p className="games-subtitle">
+            Sevimli o'yinlaringizni toping va rasmiy manbadan
+            yuklashni boshlang.
+          </p>
         </div>
+
+        <button
+          type="button"
+          className="primary-btn"
+          onClick={() => {
+            setShowAddForm(true);
+            setFormError('');
+          }}
+        >
+          + Add Game
+        </button>
 
         <input
           className="search"
@@ -506,13 +644,217 @@ function Games() {
         />
       </div>
 
+      {showAddForm && (
+        <div
+          className="game-modal-overlay"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (
+              event.target === event.currentTarget &&
+              !saving
+            ) {
+              setShowAddForm(false);
+            }
+          }}
+        >
+          <section
+            className="game-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="add-game-title"
+          >
+            <div className="game-modal-header">
+              <div>
+                <p className="eyebrow">GAME LIBRARY</p>
+                <h2 id="add-game-title">
+                  Yangi o‘yin qo‘shish
+                </h2>
+                <p>O‘yin ma’lumotlarini kiriting.</p>
+              </div>
+
+              <button
+                type="button"
+                className="game-modal-close"
+                aria-label="Yopish"
+                onClick={() => {
+                  if (!saving) setShowAddForm(false);
+                }}
+              >
+                ✕
+              </button>
+            </div>
+
+            <form
+              onSubmit={handleAddGame}
+              className="game-add-form"
+            >
+              <label>
+                O‘yin nomi
+                <input
+                  className="search"
+                  required
+                  minLength={2}
+                  placeholder="Masalan, Minecraft"
+                  value={form.name}
+                  onChange={(event) =>
+                    setForm({
+                      ...form,
+                      name: event.target.value
+                    })
+                  }
+                />
+              </label>
+
+              <label>
+                Qisqa tavsif
+                <input
+                  className="search"
+                  required
+                  minLength={3}
+                  placeholder="Adventure • Survival"
+                  value={form.description}
+                  onChange={(event) =>
+                    setForm({
+                      ...form,
+                      description: event.target.value
+                    })
+                  }
+                />
+              </label>
+
+              <label>
+                Rasm URL manzili
+                <input
+                  className="search"
+                  required
+                  type="url"
+                  placeholder="https://example.com/game.jpg"
+                  value={form.image}
+                  onChange={(event) =>
+                    setForm({
+                      ...form,
+                      image: event.target.value
+                    })
+                  }
+                />
+              </label>
+
+              <label>
+                Kategoriya
+                <select
+                  className="sort-select"
+                  value={form.category}
+                  onChange={(event) =>
+                    setForm({
+                      ...form,
+                      category: event.target.value
+                    })
+                  }
+                >
+                  <option>Action</option>
+                  <option>Adventure</option>
+                  <option>Racing</option>
+                  <option>Simulation</option>
+                  <option>Strategy</option>
+                  <option>Casual</option>
+                  <option>Other</option>
+                </select>
+              </label>
+
+              <label>
+                Platforma
+                <input
+                  className="search"
+                  placeholder="PC"
+                  value={form.platform}
+                  onChange={(event) =>
+                    setForm({
+                      ...form,
+                      platform: event.target.value
+                    })
+                  }
+                />
+              </label>
+
+              <label>
+                Yuklab olish URL manzili
+                <input
+                  className="search"
+                  type="url"
+                  placeholder="https://... (ixtiyoriy)"
+                  value={form.downloadUrl}
+                  onChange={(event) =>
+                    setForm({
+                      ...form,
+                      downloadUrl: event.target.value
+                    })
+                  }
+                />
+              </label>
+
+              <label>
+                Reyting (0–5)
+                <input
+                  className="search"
+                  type="number"
+                  min="0"
+                  max="5"
+                  step="0.1"
+                  value={form.rating}
+                  onChange={(event) =>
+                    setForm({
+                      ...form,
+                      rating: event.target.value
+                    })
+                  }
+                />
+              </label>
+
+              {formError && (
+                <p role="alert" className="game-form-error">
+                  {formError}
+                </p>
+              )}
+
+              <div className="game-modal-actions">
+                <button
+                  className="secondary-modal-btn"
+                  type="button"
+                  disabled={saving}
+                  onClick={() => setShowAddForm(false)}
+                >
+                  Bekor qilish
+                </button>
+
+                <button
+                  className="primary-btn"
+                  type="submit"
+                  disabled={saving}
+                >
+                  {saving
+                    ? 'Saqlanmoqda...'
+                    : '✓ O‘yinni saqlash'}
+                </button>
+              </div>
+
+              <small>
+                O‘yin database’ga saqlanadi va keyin ham
+                ro‘yxatda qoladi.
+              </small>
+            </form>
+          </section>
+        </div>
+      )}
+
       <div className="games-toolbar">
         <div className="category-list">
           {categories.map((item) => (
             <button
               key={item}
               type="button"
-              className={`category-btn ${category === item ? 'active' : ''}`}
+              className={`category-btn ${
+                category === item ? 'active' : ''
+              }`}
               onClick={() => setCategory(item)}
             >
               {item}
@@ -520,14 +862,20 @@ function Games() {
           ))}
         </div>
 
-        <select className="sort-select" value={sort} onChange={(event) => setSort(event.target.value)}>
+        <select
+          className="sort-select"
+          value={sort}
+          onChange={(event) => setSort(event.target.value)}
+        >
           <option value="popular">Reyting bo'yicha</option>
           <option value="name">Nom bo'yicha</option>
         </select>
       </div>
 
       <div className="library-stats">
-        <span><b>{filteredGames.length}</b> ta o'yin</span>
+        <span>
+          <b>{filteredGames.length}</b> ta o'yin
+        </span>
         <span>✓ Rasmiy yuklash manbalari</span>
         <span>⚡ Tezkor kirish</span>
       </div>
@@ -535,31 +883,52 @@ function Games() {
       {filteredGames.length > 0 ? (
         <div className="game-grid large">
           {filteredGames.map((game) => (
-            <article className="game-card enhanced-game-card" key={game.name}>
+            <article
+              className="game-card enhanced-game-card"
+              key={game.id ?? game.name}
+            >
               <div className="game-cover">
                 {game.image ? (
                   <img src={game.image} alt={game.name} />
                 ) : (
-                  <div className="emoji-cover" aria-hidden="true">{game.emoji}</div>
+                  <div className="emoji-cover" aria-hidden="true">
+                    {game.emoji || '🎮'}
+                  </div>
                 )}
-                <span className="rating-badge">★ {game.rating}</span>
+
+                <span className="rating-badge">
+                  ★ {game.rating}
+                </span>
               </div>
 
               <div className="game-info">
                 <div className="game-title-row">
                   <h3>{game.name}</h3>
-                  <span className="game-size">{game.size}</span>
+                  <span className="game-size">
+                    {game.size}
+                  </span>
                 </div>
+
                 <p>{game.type}</p>
+
                 <button
                   type="button"
                   className="primary-btn download-btn"
                   onClick={() => handleDownload(game)}
-                  disabled={downloading === game.name}
+                  disabled={
+                    downloading === game.name ||
+                    !game.downloadUrl ||
+                    game.downloadUrl === '#'
+                  }
                 >
-                  {downloading === game.name ? '⏳ Tayyorlanmoqda...' : 'Download ⬇'}
+                  {downloading === game.name
+                    ? '⏳ Tayyorlanmoqda...'
+                    : 'Download ⬇'}
                 </button>
-                <small className="official-note">Rasmiy manbaga yo'naltiradi</small>
+
+                <small className="official-note">
+                  Rasmiy manbaga yo'naltiradi
+                </small>
               </div>
             </article>
           ))}
@@ -568,7 +937,9 @@ function Games() {
         <div className="empty-page game-empty">
           <div>🔎</div>
           <h2>O'yin topilmadi</h2>
-          <p>Boshqa nom yoki kategoriya bilan qidirib ko'ring.</p>
+          <p>
+            Boshqa nom yoki kategoriya bilan qidirib ko'ring.
+          </p>
         </div>
       )}
     </div>

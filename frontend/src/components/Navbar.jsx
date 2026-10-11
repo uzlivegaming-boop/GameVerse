@@ -1,187 +1,162 @@
-import {
-  useEffect,
-  useState
-} from 'react';
+import { useEffect, useState } from 'react';
+import { Link, NavLink } from 'react-router';
+import { UserButton, useUser } from '@clerk/react';
 
-import {
-  NavLink,
-  Link
-} from 'react-router';
+const navLinks = [
+  // { name: 'Home', path: '/' },
+  { name: 'Dashboard', path: '/dashboard' },
+  { name: 'Games', path: '/games' },
+  { name: 'Favorites', path: '/favorites' },
+  { name: 'Notifications', path: '/notifications' },
+];
 
-import {
-  UserButton,
-  useUser
-} from '@clerk/react';
+const THEME_KEY = 'gameverse-theme';
 
+function getSavedTheme() {
+  try {
+    return localStorage.getItem(THEME_KEY) === 'dark';
+  } catch {
+    return document.body.classList.contains('dark-mode');
+  }
+}
 
-function Navbar() {
+export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(getSavedTheme);
 
-  const { user } =
-    useUser();
-
-
-  const [
-    darkMode,
-    setDarkMode
-  ] = useState(() => {
-
-    return (
-      localStorage.getItem(
-        'gameverse-theme'
-      ) === 'dark'
-    );
-
-  });
-
+  const { isSignedIn, user } = useUser();
 
   useEffect(() => {
+    document.body.classList.toggle('dark-mode', darkMode);
 
-    document.body.classList.toggle(
-      'dark-mode',
-      darkMode
-    );
-
-    localStorage.setItem(
-      'gameverse-theme',
-      darkMode
-        ? 'dark'
-        : 'light'
-    );
-
+    try {
+      localStorage.setItem(THEME_KEY, darkMode ? 'dark' : 'light');
+    } catch {
+      // localStorage mavjud bo'lmasa, tema faqat shu sessiyada ishlaydi
+    }
   }, [darkMode]);
 
+  function toggleTheme() {
+    setDarkMode((current) => !current);
+  }
+
+  function closeMenu() {
+    setMenuOpen(false);
+  }
+
+  function renderLinks(mobile = false) {
+    const linkClass = ({ isActive }) =>
+      `nav-link${isActive ? ' active' : ''}`;
+
+    return (
+      <>
+        {navLinks.map((link) => (
+          <NavLink
+            key={link.path}
+            to={link.path}
+            end={link.path === '/'}
+            className={linkClass}
+            onClick={closeMenu}
+          >
+            {link.name}
+          </NavLink>
+        ))}
+
+        {isSignedIn && (
+          <NavLink
+            to="/profile"
+            className={linkClass}
+            onClick={closeMenu}
+          >
+            Profile
+          </NavLink>
+        )}
+
+        {mobile && (
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={toggleTheme}
+          >
+            {darkMode ? '☀️ Light' : '🌙 Dark'}
+          </button>
+        )}
+      </>
+    );
+  }
 
   return (
     <header className="navbar">
+      <div className="navbar-brand">
+        <Link to="/" className="brand" onClick={closeMenu}>
+          <span>🎮</span> GameVerse
+        </Link>
+      </div>
 
-      <Link
-        className="brand navbar-brand"
-        to={
-          user
-            ? '/dashboard'
-            : '/'
-        }
-      >
-        🎮 <span>Game</span>Verse
-      </Link>
+      <nav className="desktop-nav">
+        {renderLinks()}
 
+        <button
+          type="button"
+          className="theme-toggle"
+          onClick={toggleTheme}
+          aria-label="Mavzuni almashtirish"
+        >
+          {darkMode ? '☀️' : '🌙'}
+        </button>
+      </nav>
 
-      {user && (
-        <nav>
-
-          <NavLink
-            to="/dashboard"
-            className={({
-              isActive
-            }) =>
-              `nav-link ${
-                isActive
-                  ? 'active'
-                  : ''
-              }`
-            }
+      <div className="navbar-actions">
+        {isSignedIn ? (
+          <div className="nav-profile">
+            <span className="profile-mini">
+              {user?.firstName || 'User'}
+            </span>
+            <UserButton />
+          </div>
+        ) : (
+          <Link
+            to="/sign-in"
+            className="nav-link"
+            onClick={closeMenu}
           >
-            <span>⌂</span>
-            Bosh sahifa
-          </NavLink>
+            Sign in
+          </Link>
+        )}
 
+        <button
+          type="button"
+          className="mobile-menu-toggle"
+          aria-label={menuOpen ? 'Menyuni yopish' : 'Menyuni ochish'}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          {menuOpen ? '✕' : '☰'}
+        </button>
+      </div>
 
-          <NavLink
-            to="/games"
-            className={({
-              isActive
-            }) =>
-              `nav-link ${
-                isActive
-                  ? 'active'
-                  : ''
-              }`
-            }
-          >
-            <span>🎮</span>
-            O'yinlar
-          </NavLink>
+      {menuOpen && (
+        <nav className="mobile-nav">
+          {renderLinks(true)}
 
-
-          <NavLink
-            to="/favorites"
-            className={({
-              isActive
-            }) =>
-              `nav-link ${
-                isActive
-                  ? 'active'
-                  : ''
-              }`
-            }
-          >
-            <span>☆</span>
-            Sevimlilar
-          </NavLink>
-
-
-          <NavLink
-            to="/notifications"
-            className={({
-              isActive
-            }) =>
-              `nav-link ${
-                isActive
-                  ? 'active'
-                  : ''
-              }`
-            }
-          >
-            <span>🔔</span>
-            Bildirishnomalar
-          </NavLink>
-
+          {isSignedIn ? (
+            <div className="nav-profile">
+              <span className="profile-mini">
+                {user?.firstName || 'User'}
+              </span>
+              <UserButton />
+            </div>
+          ) : (
+            <Link
+              to="/sign-in"
+              className="nav-link"
+              onClick={closeMenu}
+            >
+              Sign in
+            </Link>
+          )}
         </nav>
       )}
-
-
-      <button
-        type="button"
-        className="theme-toggle"
-        onClick={() =>
-          setDarkMode(
-            prev => !prev
-          )
-        }
-      >
-        {
-          darkMode
-            ? '☀️'
-            : '🌙'
-        }
-      </button>
-
-
-      {user && (
-        <div className="nav-profile">
-
-          <Link
-            className="profile-mini"
-            to="/profile"
-          >
-            <span>
-              {
-                user.firstName ||
-                user.username ||
-                'Player'
-              }
-            </span>
-          </Link>
-
-
-          <UserButton />
-
-        </div>
-      )}
-
     </header>
   );
 }
-
-
-export default Navbar;
