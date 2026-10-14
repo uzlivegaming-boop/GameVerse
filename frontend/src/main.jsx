@@ -1,48 +1,40 @@
-import React from 'react';
 
-import ReactDOM
-  from 'react-dom/client';
+import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom/client';
+import { ClerkProvider, useAuth } from '@clerk/react';
 
 import App from './App';
-
+import { setTokenProvider } from './api/client';
 import './index.css';
 
-import {
-  ClerkProvider
-} from '@clerk/react';
-
-
-const PUBLISHABLE_KEY =
-  import.meta.env
-    .VITE_CLERK_PUBLISHABLE_KEY;
-
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 if (!PUBLISHABLE_KEY) {
   throw new Error(
-    'VITE_CLERK_PUBLISHABLE_KEY topilmadi. .env.local faylini tekshiring.'
+    'VITE_CLERK_PUBLISHABLE_KEY topilmadi. frontend/.env.local faylini tekshiring.'
   );
 }
 
+function AuthTokenBridge() {
+  const { getToken, isLoaded } = useAuth();
 
-ReactDOM
-  .createRoot(
-    document.getElementById(
-      'root'
-    )
-  )
-  .render(
+  useEffect(() => {
+    if (!isLoaded) return;
 
-    <React.StrictMode>
+    setTokenProvider(() => getToken());
 
-      <ClerkProvider
-        publishableKey={
-          PUBLISHABLE_KEY
-        }
-      >
+    return () => {
+      setTokenProvider(null);
+    };
+  }, [getToken, isLoaded]);
 
-        <App />
+  return <App />;
+}
 
-      </ClerkProvider>
-
-    </React.StrictMode>
-  );
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+      <AuthTokenBridge />
+    </ClerkProvider>
+  </React.StrictMode>
+);

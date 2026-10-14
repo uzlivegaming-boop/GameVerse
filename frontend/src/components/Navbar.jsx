@@ -1,11 +1,17 @@
+// frontend/src/components/Navbar.jsx
+
 import { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router';
 import { UserButton, useUser } from '@clerk/react';
 
 const navLinks = [
-  // { name: 'Home', path: '/' },
   { name: 'Dashboard', path: '/dashboard' },
   { name: 'Games', path: '/games' },
+  {
+    name: 'My Games',
+    path: '/my-games',
+    signedInOnly: true,
+  },
   { name: 'Favorites', path: '/favorites' },
   { name: 'Notifications', path: '/notifications' },
 ];
@@ -23,7 +29,6 @@ function getSavedTheme() {
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(getSavedTheme);
-
   const { isSignedIn, user } = useUser();
 
   useEffect(() => {
@@ -32,7 +37,7 @@ export default function Navbar() {
     try {
       localStorage.setItem(THEME_KEY, darkMode ? 'dark' : 'light');
     } catch {
-      // localStorage mavjud bo'lmasa, tema faqat shu sessiyada ishlaydi
+      // localStorage mavjud bo'lmasa ham tema ishlaydi.
     }
   }, [darkMode]);
 
@@ -50,17 +55,18 @@ export default function Navbar() {
 
     return (
       <>
-        {navLinks.map((link) => (
-          <NavLink
-            key={link.path}
-            to={link.path}
-            end={link.path === '/'}
-            className={linkClass}
-            onClick={closeMenu}
-          >
-            {link.name}
-          </NavLink>
-        ))}
+        {navLinks
+          .filter((link) => !link.signedInOnly || isSignedIn)
+          .map((link) => (
+            <NavLink
+              key={link.path}
+              to={link.path}
+              className={linkClass}
+              onClick={closeMenu}
+            >
+              {link.name}
+            </NavLink>
+          ))}
 
         {isSignedIn && (
           <NavLink

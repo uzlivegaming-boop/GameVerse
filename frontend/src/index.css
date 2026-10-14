@@ -1613,6 +1613,67 @@ body.dark-mode .auth-note {
   text-shadow: 0 0 12px #3b82f6;
 }
 
+
+/* Mening o'yinlarim sahifasi */
+
+.my-game-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.my-game-actions .primary-btn,
+.my-game-actions .secondary-modal-btn {
+  flex: 1;
+  min-height: 40px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.my-game-actions .secondary-modal-btn {
+  border-color: #fecaca;
+  background: #fff1f2;
+  color: #be123c;
+}
+
+.my-game-actions .secondary-modal-btn:hover {
+  background: #ffe4e6;
+}
+
+.my-game-download {
+  display: inline-block;
+  margin-top: 12px;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.my-game-download:hover {
+  text-decoration: underline;
+}
+
+.my-games-page > .game-form-error {
+  margin: 12px 0 18px;
+}
+
+body.dark-mode .my-game-actions .secondary-modal-btn {
+  background: #3b1721;
+  color: #fda4af;
+  border-color: #7f1d1d;
+}
+
+@media (max-width: 600px) {
+  .my-game-actions {
+    flex-direction: column;
+  }
+}
+
+
+
 /* Telefon ekranlari */
 @media (max-width: 520px) {
   .auth-page {

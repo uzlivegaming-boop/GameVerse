@@ -1,3 +1,5 @@
+// frontend/src/api/games.js
+
 import client from './client';
 
 export async function getGames() {

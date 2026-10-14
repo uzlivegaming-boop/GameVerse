@@ -1,16 +1,21 @@
+// backend/src/controllers/game.controller.js
 
 const prisma = require('../prisma');
 
 const getAll = async (req, res, next) => {
   try {
     const items = await prisma.games.findMany({
-      where: { userId: req.userId },
-      orderBy: { createdAt: 'desc' }
+      where: {
+        userId: req.userId,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
 
     res.json({
       success: true,
-      data: items
+      data: items,
     });
   } catch (err) {
     next(err);
@@ -24,27 +29,27 @@ const getById = async (req, res, next) => {
     if (!Number.isInteger(id) || id < 1) {
       return res.status(400).json({
         success: false,
-        error: 'ID noto‘g‘ri'
+        error: 'ID noto‘g‘ri',
       });
     }
 
     const item = await prisma.games.findFirst({
       where: {
         id,
-        userId: req.userId
-      }
+        userId: req.userId,
+      },
     });
 
     if (!item) {
       return res.status(404).json({
         success: false,
-        error: 'O‘yin topilmadi'
+        error: 'O‘yin topilmadi',
       });
     }
 
     res.json({
       success: true,
-      data: item
+      data: item,
     });
   } catch (err) {
     next(err);
@@ -61,7 +66,7 @@ const create = async (req, res, next) => {
       platform,
       downloadUrl,
       rating,
-      downloadCount
+      downloadCount,
     } = req.body;
 
     const item = await prisma.games.create({
@@ -74,13 +79,16 @@ const create = async (req, res, next) => {
         downloadUrl: downloadUrl || null,
         rating: rating ?? null,
         downloadCount: downloadCount ?? 0,
-        userId: req.userId
-      }
+
+        // Egasi backend autentifikatsiyasidan olinadi.
+        // Frontend yuborgan userId ga ishonilmaydi.
+        userId: req.userId,
+      },
     });
 
     res.status(201).json({
       success: true,
-      data: item
+      data: item,
     });
   } catch (err) {
     next(err);
@@ -94,21 +102,21 @@ const update = async (req, res, next) => {
     if (!Number.isInteger(id) || id < 1) {
       return res.status(400).json({
         success: false,
-        error: 'ID noto‘g‘ri'
+        error: 'ID noto‘g‘ri',
       });
     }
 
     const existing = await prisma.games.findFirst({
       where: {
         id,
-        userId: req.userId
-      }
+        userId: req.userId,
+      },
     });
 
     if (!existing) {
       return res.status(404).json({
         success: false,
-        error: 'O‘yin topilmadi'
+        error: 'O‘yin topilmadi',
       });
     }
 
@@ -120,21 +128,25 @@ const update = async (req, res, next) => {
       'platform',
       'downloadUrl',
       'rating',
-      'downloadCount'
+      'downloadCount',
     ];
 
     const data = Object.fromEntries(
-      Object.entries(req.body).filter(([key]) => allowed.includes(key))
+      Object.entries(req.body).filter(([key]) =>
+        allowed.includes(key)
+      )
     );
 
     const item = await prisma.games.update({
-      where: { id },
-      data
+      where: {
+        id,
+      },
+      data,
     });
 
     res.json({
       success: true,
-      data: item
+      data: item,
     });
   } catch (err) {
     next(err);
@@ -148,29 +160,31 @@ const remove = async (req, res, next) => {
     if (!Number.isInteger(id) || id < 1) {
       return res.status(400).json({
         success: false,
-        error: 'ID noto‘g‘ri'
+        error: 'ID noto‘g‘ri',
       });
     }
 
     const existing = await prisma.games.findFirst({
       where: {
         id,
-        userId: req.userId
-      }
+        userId: req.userId,
+      },
     });
 
     if (!existing) {
       return res.status(404).json({
         success: false,
-        error: 'O‘yin topilmadi'
+        error: 'O‘yin topilmadi',
       });
     }
 
     await prisma.games.delete({
-      where: { id }
+      where: {
+        id,
+      },
     });
 
-    res.status(204).send();
+    return res.status(204).send();
   } catch (err) {
     next(err);
   }
@@ -181,5 +195,5 @@ module.exports = {
   getById,
   create,
   update,
-  remove
+  remove,
 };

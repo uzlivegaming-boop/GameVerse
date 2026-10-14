@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
+// frontend/src/App.jsx
+
 import { BrowserRouter, Routes, Route } from 'react-router';
-import { useAuth } from '@clerk/react';
-import { setTokenProvider } from './api/client';
 
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -11,19 +10,10 @@ import Games from './pages/Games';
 import Favorites from './pages/Favorites';
 import Notifications from './pages/Notifications';
 import Profile from './pages/Profile';
+import MyGames from './pages/MyGames';
 import ConnectionStatus from './components/ConnectionStatus';
 
 function App() {
-  const { getToken } = useAuth();
-
-  useEffect(() => {
-    setTokenProvider(getToken);
-
-    return () => {
-      setTokenProvider(null);
-    };
-  }, [getToken]);
-
   return (
     <BrowserRouter>
       <Routes>
@@ -44,6 +34,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <Games />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/my-games"
+            element={
+              <ProtectedRoute>
+                <MyGames />
               </ProtectedRoute>
             }
           />

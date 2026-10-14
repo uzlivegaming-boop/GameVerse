@@ -1,3 +1,4 @@
+
 import axios from 'axios';
 
 const client = axios.create({
@@ -7,38 +8,44 @@ const client = axios.create({
   },
 });
 
-let getToken = null;
+let tokenProvider = null;
 
 export function setTokenProvider(provider) {
-  getToken = provider;
+  tokenProvider = provider;
 }
 
-client.interceptors.request.use(async (config) => {
-  if (getToken) {
-    try {
-      const token = await getToken();
-
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-    } catch (error) {
-      console.error('Token olishda xatolik:', error);
+client.interceptors.request.use(
+  async (config) => {
+    if (typeof tokenProvider !== 'function') {
+      throw new Error(
+        'Clerk hali tayyor emas. Sahifani yangilang va qayta urinib ko‘ring.'
+      );
     }
-  }
 
-  return config;
-});
+    const token = await tokenProvider();
+
+    if (!token) {
+      throw new Error(
+        'Clerk token olinmadi. Hisobga kirganingizni tekshiring.'
+      );
+    }
+
+    config.headers = config.headers || {};
+    config.headers.Authorization = `Bearer ${token}`;
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 client.interceptors.response.use(
   (response) => response,
   (error) => {
-    const message =
-      error.response?.data?.message ||
-      error.response?.data?.error ||
-      error.message ||
-      'Server bilan bog‘lanishda xatolik';
-
-    console.error('API xatoligi:', message);
+    if (error.response?.status === 401) {
+      console.error(
+        '401 Unauthorized: Clerk kalitlari, token yoki backend autentifikatsiyasini tekshiring.'
+      );
+    }
 
     return Promise.reject(error);
   }

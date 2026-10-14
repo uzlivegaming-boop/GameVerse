@@ -21,7 +21,7 @@ function Home() {
         preload="metadata"
         aria-hidden="true"
       >
-        <source src="/videos/game-bg.mp4" type="video/mp4" />
+        <source src="https://media.istockphoto.com/id/1432965103/video/neon-flash-light-structures-hi-tech-neon-sci-fi-tunel-trendy-neon-glow-lines-form-pattern-and.mp4?s=mp4-640x640-is&k=20&c=SM_RaXPByXS6uy-fmxpLl4SNL6TdO98Q9Tz9DRRsYrs=" type="video/mp4" />
       </video>
 
       {/* Video ustidagi qoramtir qatlam */}

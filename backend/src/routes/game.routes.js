@@ -1,62 +1,44 @@
-const express = require('express');
+// backend/src/routes/game.routes.js
 
+const express = require('express');
 const router = express.Router();
 
-const controller =
-  require('../controllers/game.controller');
-
-const validate =
-  require('../middlewares/validate');
+const controller = require('../controllers/game.controller');
+const validate = require('../middlewares/validate');
 
 const {
-  requireAuth
+  requireAuth,
 } = require('../middlewares/auth.middleware');
 
 const {
   createGameSchema,
-  updateGameSchema
+  updateGameSchema,
 } = require('../validations/game.validation');
 
-
-// Barcha /games endpointlari authentication talab qiladi
+// Barcha /games endpointlari login talab qiladi.
 router.use(requireAuth);
 
+// O'yinlarni olish
+router.get('/', controller.getAll);
 
-// 1. GET
-router.get(
-  '/',
-  controller.getAll
-);
+// Bitta o'yinni olish
+router.get('/:id', controller.getById);
 
-
-// 2. GET BY ID
-router.get(
-  '/:id',
-  controller.getById
-);
-
-
-// 3. POST
+// Yangi o'yin qo'shish
 router.post(
   '/',
   validate(createGameSchema),
   controller.create
 );
 
-
-// 4. PUT
+// O'yinni tahrirlash
 router.put(
   '/:id',
   validate(updateGameSchema),
   controller.update
 );
 
-
-// 5. DELETE
-router.delete(
-  '/:id',
-  controller.remove
-);
-
+// O'yinni o'chirish
+router.delete('/:id', controller.remove);
 
 module.exports = router;
