@@ -79,9 +79,6 @@ const create = async (req, res, next) => {
         downloadUrl: downloadUrl || null,
         rating: rating ?? null,
         downloadCount: downloadCount ?? 0,
-
-        // Egasi backend autentifikatsiyasidan olinadi.
-        // Frontend yuborgan userId ga ishonilmaydi.
         userId: req.userId,
       },
     });
@@ -190,10 +187,97 @@ const remove = async (req, res, next) => {
   }
 };
 
+// Bitta o‘yin uchun izohlarni olish
+const getComments = async (req, res, next) => {
+  try {
+    const gameKey = String(
+      req.params.gameKey || ''
+    ).trim();
+
+    if (!gameKey || gameKey.length > 180) {
+      return res.status(400).json({
+        success: false,
+        error: 'O‘yin kaliti noto‘g‘ri',
+      });
+    }
+
+    const comments = await prisma.gameComment.findMany({
+      where: {
+        gameKey,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 100,
+    });
+
+    res.json({
+      success: true,
+      data: comments,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Yangi izoh yaratish
+const createComment = async (req, res, next) => {
+  try {
+    const gameKey = String(
+      req.params.gameKey || ''
+    ).trim();
+
+    const content = String(
+      req.body.content || ''
+    ).trim();
+
+    const userName = String(
+      req.body.userName ||
+        'GameVerse foydalanuvchisi'
+    )
+      .trim()
+      .slice(0, 80);
+
+    if (!gameKey || gameKey.length > 180) {
+      return res.status(400).json({
+        success: false,
+        error: 'O‘yin kaliti noto‘g‘ri',
+      });
+    }
+
+    if (content.length < 2 || content.length > 1000) {
+      return res.status(400).json({
+        success: false,
+        error:
+          'Izoh 2 tadan 1000 tagacha belgidan iborat bo‘lishi kerak',
+      });
+    }
+
+    const comment = await prisma.gameComment.create({
+      data: {
+        gameKey,
+        userId: req.userId,
+        userName:
+          userName || 'GameVerse foydalanuvchisi',
+        content,
+      },
+    });
+
+    res.status(201).json({
+      success: true,
+      data: comment,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getAll,
   getById,
   create,
   update,
   remove,
+  getComments,
+  createComment,
 };

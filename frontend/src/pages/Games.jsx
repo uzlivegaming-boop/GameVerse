@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { createGame, getGames } from '../api/games';
-
-const games = [
+import { useNavigate } from 'react-router';
+export const games = [
   {
     name: 'Minecraft',
     type: 'Adventure • Survival',
@@ -474,7 +474,20 @@ const categories = [
   'Other'
 ];
 
+
+
+function gameSlug(name) {
+  return name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+
+
 function Games() {
+  const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('Barchasi');
   const [sort, setSort] = useState('popular');
@@ -852,9 +865,8 @@ function Games() {
             <button
               key={item}
               type="button"
-              className={`category-btn ${
-                category === item ? 'active' : ''
-              }`}
+              className={`category-btn ${category === item ? 'active' : ''
+                }`}
               onClick={() => setCategory(item)}
             >
               {item}
@@ -884,8 +896,23 @@ function Games() {
         <div className="game-grid large">
           {filteredGames.map((game) => (
             <article
-              className="game-card enhanced-game-card"
+              className="game-card enhanced-game-card game-card-clickable"
               key={game.id ?? game.name}
+              role="link"
+              tabIndex={0}
+              aria-label={`${game.name} haqida batafsil`}
+              onClick={() =>
+                navigate(`/games/${gameSlug(game.name)}`)
+              }
+              onKeyDown={(event) => {
+                if (
+                  event.key === 'Enter' ||
+                  event.key === ' '
+                ) {
+                  event.preventDefault();
+                  navigate(`/games/${gameSlug(game.name)}`);
+                }
+              }}
             >
               <div className="game-cover">
                 {game.image ? (
@@ -914,7 +941,10 @@ function Games() {
                 <button
                   type="button"
                   className="primary-btn download-btn"
-                  onClick={() => handleDownload(game)}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    handleDownload(game);
+                  }}
                   disabled={
                     downloading === game.name ||
                     !game.downloadUrl ||

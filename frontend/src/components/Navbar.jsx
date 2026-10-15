@@ -32,12 +32,18 @@ export default function Navbar() {
   const { isSignedIn, user } = useUser();
 
   useEffect(() => {
+    // Body va HTML elementlariga tema klasslarini qo'shamiz
     document.body.classList.toggle('dark-mode', darkMode);
+    document.documentElement.classList.toggle('dark', darkMode);
 
+    // CSS o'zgaruvchilari uchun
+    document.documentElement.dataset.theme = darkMode ? 'dark' : 'light';
+
+    // Tanlangan rejimni saqlash
     try {
       localStorage.setItem(THEME_KEY, darkMode ? 'dark' : 'light');
-    } catch {
-      // localStorage mavjud bo'lmasa ham tema ishlaydi.
+    } catch (error) {
+      console.error('Temani saqlashda xato:', error);
     }
   }, [darkMode]);
 

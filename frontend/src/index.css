@@ -1666,6 +1666,529 @@ body.dark-mode .my-game-actions .secondary-modal-btn {
   border-color: #7f1d1d;
 }
 
+
+
+/* GAME DETAILS AND COMMENTS */
+
+.game-card-clickable {
+  cursor: pointer;
+}
+
+.game-card-clickable:focus-visible {
+  outline: 3px solid #60a5fa;
+  outline-offset: 3px;
+}
+
+.details-back-link {
+  border: 0;
+  padding: 8px 0;
+  margin: 0 0 20px;
+  background: transparent;
+  color: #2563eb;
+  font-weight: 700;
+}
+
+.game-details-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+  padding: clamp(18px, 3vw, 32px);
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, .06);
+}
+
+.game-details-image {
+  min-height: 280px;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #111827;
+}
+
+.game-details-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  max-height: 440px;
+  object-fit: cover;
+}
+
+.game-details-summary h1 {
+  margin: 0 0 10px;
+  overflow-wrap: anywhere;
+}
+
+.game-details-type {
+  color: #6b7280;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.details-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.details-tags span {
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.game-details-description {
+  color: #4b5563;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+.details-download {
+  width: fit-content;
+  min-width: 220px;
+  padding: 0 16px;
+}
+
+.details-back-btn {
+  width: auto;
+  margin: 10px auto 0;
+}
+
+.details-loading {
+  padding: 60px 0;
+  text-align: center;
+  color: #6b7280;
+}
+
+.game-comments-section {
+  margin-top: 34px;
+  padding: clamp(18px, 3vw, 30px);
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 30px rgba(15, 23, 42, .04);
+}
+
+.game-comments-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.game-comments-heading h2 {
+  margin: 0;
+}
+
+.comment-count {
+  flex-shrink: 0;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: #f3f4f6;
+  color: #4b5563;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.comment-form {
+  display: grid;
+  gap: 10px;
+  padding-bottom: 24px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.comment-form label {
+  color: #374151;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.comment-textarea {
+  min-height: 110px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.comment-form-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.comment-form-footer small {
+  color: #9ca3af;
+}
+
+.comment-submit {
+  width: auto;
+  min-width: 150px;
+}
+
+.comment-submit:disabled {
+  cursor: not-allowed;
+  opacity: .55;
+}
+
+.comments-list {
+  display: grid;
+  gap: 14px;
+}
+
+.comment-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fafafa;
+}
+
+.comment-avatar {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-weight: 800;
+}
+
+.comment-content {
+  min-width: 0;
+  flex: 1;
+}
+
+.comment-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-bottom: 8px;
+}
+
+.comment-meta strong {
+  color: #111827;
+  font-size: 14px;
+}
+
+.comment-meta time {
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.comment-content p {
+  margin: 0;
+  color: #4b5563;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.comments-empty {
+  padding: 32px 12px;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  text-align: center;
+  color: #6b7280;
+}
+
+.comments-empty span {
+  font-size: 32px;
+}
+
+.comments-empty strong {
+  color: #374151;
+}
+
+.comments-empty p {
+  margin: 0;
+}
+
+
+
+
+/* ===== GAMEVERSE THEME FIX ===== */
+
+:root {
+  color-scheme: light;
+  --page-bg: #f3f5fb;
+  --card-bg: #ffffff;
+  --text-main: #172033;
+  --text-secondary: #64748b;
+  --border-color: #e2e8f0;
+  --input-bg: #f8fafc;
+  --input-text: #172033;
+  --input-placeholder: #64748b;
+  --nav-bg: #ffffff;
+  --shadow-color: rgba(15, 23, 42, 0.08);
+}
+
+html.dark,
+html[data-theme="dark"],
+body.dark,
+body[data-theme="dark"],
+#root.dark,
+#root[data-theme="dark"] {
+  color-scheme: dark;
+  --page-bg: #080e1d;
+  --card-bg: #101b32;
+  --text-main: #f1f5ff;
+  --text-secondary: #b6c5df;
+  --border-color: #263b60;
+  --input-bg: #0c1529;
+  --input-text: #f1f5ff;
+  --input-placeholder: #91a5c7;
+  --nav-bg: #0c1427;
+  --shadow-color: rgba(0, 0, 0, 0.2);
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--page-bg);
+  color: var(--text-main);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+body,
+body * {
+  box-sizing: border-box;
+}
+
+/* Asosiy matnlar */
+h1, h2, h3, h4, h5, h6,
+p, label, span, li, small {
+  color: inherit;
+}
+
+p, .text-gray-500, .text-gray-400,
+.text-slate-500, .text-slate-400 {
+  color: var(--text-secondary);
+}
+
+/* Kartalar */
+.game-card,
+.game-details-card,
+.game-detail-card,
+.comments-section,
+.comment-card,
+.bg-white {
+  background-color: var(--card-bg);
+  color: var(--text-main);
+  border-color: var(--border-color);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Izoh yozish maydoni */
+textarea,
+input,
+select {
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border-color: var(--border-color);
+}
+
+textarea::placeholder,
+input::placeholder {
+  color: var(--input-placeholder);
+  opacity: 1;
+}
+
+textarea:focus,
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Light rejimida oq kartadagi matnlar */
+html:not(.dark) .bg-white,
+html:not([data-theme="dark"]) body:not(.dark) .bg-white {
+  color: var(--text-main);
+}
+
+/* Navbar */
+nav,
+.navbar {
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Izohlar */
+.comment-text,
+.comment-author,
+.comments-section h2,
+.comments-section h3 {
+  color: var(--text-main);
+}
+
+.comment-date,
+.comments-description {
+  color: var(--text-secondary);
+}
+
+
+
+
+/* ===== GAMEVERSE DARK MODE FIX ===== */
+
+html.dark,
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+body.dark-mode {
+  background: #080e1d !important;
+  color: #f1f5ff;
+}
+
+body.dark-mode .app-shell {
+  background: #080e1d;
+  color: #f1f5ff;
+}
+
+body.dark-mode .navbar,
+body.dark-mode .mobile-nav {
+  background: #0c1427;
+  border-color: #263b60;
+}
+
+body.dark-mode .game-card,
+body.dark-mode .welcome-card,
+body.dark-mode .profile-card,
+body.dark-mode .activity-card,
+body.dark-mode .notice,
+body.dark-mode .stat-card,
+body.dark-mode .game-details-hero,
+body.dark-mode .game-comments-section,
+body.dark-mode .comment-card {
+  background: #101b32;
+  color: #f1f5ff;
+  border-color: #263b60;
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode p,
+body.dark-mode label,
+body.dark-mode .comment-meta strong,
+body.dark-mode .comment-content p {
+  color: #f1f5ff;
+}
+
+body.dark-mode .muted,
+body.dark-mode .games-subtitle,
+body.dark-mode .game-details-type,
+body.dark-mode .game-details-description,
+body.dark-mode .comment-meta time,
+body.dark-mode .comments-empty {
+  color: #b6c5df;
+}
+
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  background: #0c1529;
+  color: #f1f5ff;
+  border-color: #263b60;
+}
+
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: #91a5c7;
+}
+
+body.dark-mode .comment-count {
+  background: #1e293b;
+  color: #f1f5ff;
+}
+
+body.dark-mode .comment-form,
+body.dark-mode .profile-top {
+  border-color: #263b60;
+}
+
+body.dark-mode .app-footer {
+  border-color: #263b60;
+  color: #b6c5df;
+}
+
+body.dark-mode .theme-toggle {
+  background: #1e293b;
+  color: #facc15;
+  border-color: #334155;
+}
+
+
+
+
+
+
+
+/* Mobil qurilmalar */
+@media (max-width: 768px) {
+  .game-details-card,
+  .game-detail-card {
+    grid-template-columns: 1fr;
+  }
+
+  textarea {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+
+
+
+@media (max-width: 760px) {
+  .game-details-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .game-details-image,
+  .game-details-image img {
+    min-height: 210px;
+    max-height: 320px;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-comments-heading {
+    align-items: flex-start;
+  }
+
+  .comment-form-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .comment-submit {
+    width: 100%;
+  }
+}
+
+
+
 @media (max-width: 600px) {
   .my-game-actions {
     flex-direction: column;

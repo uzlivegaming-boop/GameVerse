@@ -8,7 +8,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
@@ -28,4 +27,15 @@ model Games {
   createdAt     DateTime @default(now())
 
   @@index([userId, createdAt])
+}
+
+model GameComment {
+  id        Int      @id @default(autoincrement())
+  gameKey   String
+  userId    String
+  userName  String   @default("GameVerse foydalanuvchisi")
+  content   String   @db.VarChar(1000)
+  createdAt DateTime @default(now())
+
+  @@index([gameKey, createdAt])
 }

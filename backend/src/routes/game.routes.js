@@ -18,27 +18,31 @@ const {
 // Barcha /games endpointlari login talab qiladi.
 router.use(requireAuth);
 
-// O'yinlarni olish
+// O‘yinlarni olish
 router.get('/', controller.getAll);
 
-// Bitta o'yinni olish
+// Har bir o‘yin uchun izohlar
+router.get('/comments/:gameKey', controller.getComments);
+router.post('/comments/:gameKey', controller.createComment);
+
+// Bitta o‘yinni olish
 router.get('/:id', controller.getById);
 
-// Yangi o'yin qo'shish
+// Yangi o‘yin qo‘shish
 router.post(
   '/',
   validate(createGameSchema),
   controller.create
 );
 
-// O'yinni tahrirlash
+// O‘yinni tahrirlash
 router.put(
   '/:id',
   validate(updateGameSchema),
   controller.update
 );
 
-// O'yinni o'chirish
+// O‘yinni o‘chirish
 router.delete('/:id', controller.remove);
 
 module.exports = router;

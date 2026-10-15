@@ -1,5 +1,3 @@
-// frontend/src/App.jsx
-
 import { BrowserRouter, Routes, Route } from 'react-router';
 
 import Layout from './components/Layout';
@@ -7,6 +5,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Games from './pages/Games';
+import GameDetails from './pages/GameDetails';
 import Favorites from './pages/Favorites';
 import Notifications from './pages/Notifications';
 import Profile from './pages/Profile';
@@ -34,6 +33,15 @@ function App() {
             element={
               <ProtectedRoute>
                 <Games />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/games/:gameSlug"
+            element={
+              <ProtectedRoute>
+                <GameDetails />
               </ProtectedRoute>
             }
           />
